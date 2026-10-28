@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Rosary Prayers</title>
+  <title>Bible Character</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -60,11 +60,11 @@
                         <div class="card-body">
                             <div class="text-center mt-4">
                                 <div class="mb-3">
-                                  <span class="text-dark fw-bold navbar-brand" style="font-size:20px;"> Rosary Prayers</span>
+                                  <span class="text-dark fw-bold navbar-brand" style="font-size:20px;"> Bible Character</span>
                                 </div>
                             </div>
                             <div class="p-3">
-                                <h4 class="font-size-18 text-muted mt-0 text-center">Welcome To Rosary Prayers</h4>
+                                <h4 class="font-size-18 text-muted mt-0 text-center">Welcome To Bible Character</h4>
                                 <p class="text-muted text-center mb-4"></p>
 
                                 <form class="form-horizontal"   method="POST" action="{{ route('admin.auth') }}" novalidate>

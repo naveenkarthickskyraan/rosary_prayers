@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AppController;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\Admin\RosaryCategoryController;
+use App\Http\Controllers\Admin\RosaryPrayerAdminController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -87,4 +89,28 @@ Route::get('/webform', function () {
 
 Route::get('{any}', function () {
     return view('admin.error');
+});
+
+Route::prefix('admin')->group(function () {
+
+    // Rosary Categories
+    Route::get('rosary-categories', [RosaryCategoryController::class, 'index']);
+    Route::get('rosary-categories/create', [RosaryCategoryController::class, 'create']);
+    Route::post('rosary-categories', [RosaryCategoryController::class, 'store']);
+    Route::get('rosary-categories/{id}/edit', [RosaryCategoryController::class, 'edit']);
+    Route::post('rosary-categories/{id}/update', [RosaryCategoryController::class, 'update']);
+    Route::get('rosary-categories/{id}/delete', [RosaryCategoryController::class, 'destroy']);
+
+    // Rosary Prayers
+    Route::get('rosary-prayers', [RosaryPrayerAdminController::class, 'index']);
+    Route::get('rosary-prayers/create', [RosaryPrayerAdminController::class, 'create']);
+    Route::post('rosary-prayers', [RosaryPrayerAdminController::class, 'store']);
+    Route::get('rosary-prayers/{id}/edit', [RosaryPrayerAdminController::class, 'edit']);
+    Route::post('rosary-prayers/{id}/update', [RosaryPrayerAdminController::class, 'update']);
+    Route::get('rosary-prayers/{id}/delete', [RosaryPrayerAdminController::class, 'destroy']);
+
+    // API test page
+    Route::get('rosary-api-list', function () {
+        return view('admin.rosary.api_list');
+    });
 });

@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Rosary Prayers</title>
+  <title>Bible Character</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -60,7 +60,7 @@
                         <div class="card-body">
                             <div class="text-center mt-4">
                                 <div class="mb-3">
-                                  <span class="text-dark fw-bold navbar-brand" style="font-size:20px;"> Rosary Prayers</span>
+                                  <span class="text-dark fw-bold navbar-brand" style="font-size:20px;"> Bible Character</span>
                                 </div>
                             </div>
                             <div class="p-3">

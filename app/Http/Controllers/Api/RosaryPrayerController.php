@@ -18,7 +18,7 @@ class RosaryPrayerController extends Controller
                 return [
                     'id'   => $c->id,
                     'name' => $c->name,
-                    'icon' => $c->icon,
+                    'icon' => $c->icon ?? '',
                 ];
             })
             ->values()

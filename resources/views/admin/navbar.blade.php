@@ -182,7 +182,7 @@
                   </span>
                   <span class="logo-lg">
                       {{-- <img src="{{ asset('assets/assets/images/400.png')}}" alt="" height="20" style="max-width:20%;height: auto;">  --}}
-                      <span class="text-white fw-bold navbar-brand" style="font-size:20px;"> Rosary Prayers</span>
+                      <span class="text-white fw-bold navbar-brand" style="font-size:20px;"> Bible Character</span>
                   </span>
               </a>
           </div>
@@ -192,7 +192,7 @@
           </button>
 
           <div class="d-none d-sm-block ms-2">
-              <h4 class="page-title font-size-18">Rosary Prayers </h4>
+              <h4 class="page-title font-size-18">Bible Character </h4>
           </div>
 
       </div>
