@@ -46,8 +46,8 @@ class RosaryPrayerController extends Controller
             ->paginate($limit, ['*'], 'page', $page);
         $resArr = collect($paginator->items())->map(function ($s) {
             return [
-                'sub_category'       => $s->id,
                 'category_id'   => $s->category_id,
+                'sub_category'       => $s->id,
                 'name'     => $s->name,
                 'subtitle' => $s->subtitle ?? '',
                 'imageUrl' => $s->image_url ?? '',
@@ -81,7 +81,7 @@ class RosaryPrayerController extends Controller
 
         $resArr = collect($paginator->items())->map(function ($p) {
             return [
-                'id'       => $p->id,
+                'prayer_id'       => $p->id,
                 'title'    => $p->title,
                 'subtitle' => $p->subtitle ?? '',
                 'imageUrl' => $p->thumbnail_url ?? '',
