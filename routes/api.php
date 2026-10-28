@@ -21,7 +21,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 // Rosary Prayer
-Route::get('/categories', [App\Http\Controllers\Api\RosaryPrayerController::class, 'categories']);
+Route::match(['get', 'post'], '/categories', [App\Http\Controllers\Api\RosaryPrayerController::class, 'categories']);
+Route::post('/sub-categories', [App\Http\Controllers\Api\RosaryPrayerController::class, 'subCategories']);
 Route::post('/categories/prayers', [App\Http\Controllers\Api\RosaryPrayerController::class, 'categoryPrayers']);
 Route::post('/prayers/detail', [App\Http\Controllers\Api\RosaryPrayerController::class, 'prayerDetail']);
 
