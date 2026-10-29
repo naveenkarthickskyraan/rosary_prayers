@@ -104,7 +104,7 @@ class RosaryPrayerController extends Controller
         }
 
         $parts   = preg_split("/\R{2,}/", trim($prayer->body));
-        $heading = array_shift($parts);
+        // $heading = array_shift($parts);
 
         $resArr = [
             'id'            => $prayer->id,
@@ -112,9 +112,9 @@ class RosaryPrayerController extends Controller
             'subCategoryId' => $prayer->sub_category_id,
             'title'         => $prayer->title,
             'subtitle'      => $prayer->subtitle ?? '',
+             'heading'       => $prayer->heading,
             'imageUrl'      => $prayer->thumbnail_url ?? '',
-            'prayers'       => $heading,
-            // 'paragraphs'    => $parts,
+            'paragraphs'    => $parts,
         ];
 
         return $this->response($resArr);

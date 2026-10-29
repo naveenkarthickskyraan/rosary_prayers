@@ -46,12 +46,15 @@
     <label class="form-label">Subtitle</label>
     <input type="text" name="subtitle" class="form-control" value="{{ old('subtitle', $prayer->subtitle ?? '') }}">
 </div>
+<div class="mb-3">
+    <label class="form-label">Heading</label>
+    <input type="text" name="heading" class="form-control" value="{{ old('heading', $prayer->heading ?? '') }}">
+</div>
 
 <div class="mb-3">
     <label class="form-label">Prayer Text <span class="text-danger">*</span></label>
     <textarea name="body" rows="14" class="form-control" required>{{ old('body', $prayer->body ?? '') }}</textarea>
     <small class="text-muted">
-        First line = heading (e.g. "Heavenly Father,"). Leave one blank line between paragraphs.
     </small>
 </div>
 

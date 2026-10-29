@@ -10,7 +10,7 @@ class RosaryPrayer extends Model
     protected $table = 'rosary_prayers';
 
     protected $fillable = [
-        'category_id', 'sub_category_id', 'slug', 'title', 'subtitle', 'body',
+        'category_id', 'sub_category_id', 'slug', 'title', 'subtitle','heading', 'body',
         'thumbnail_url', 'sort_order',
     ];
 
