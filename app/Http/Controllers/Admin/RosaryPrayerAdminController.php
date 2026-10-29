@@ -26,13 +26,12 @@ class RosaryPrayerAdminController extends Controller
             $query->where('sub_category_id', $request->sub_category_id);
         }
 
-        $prayers       = $query->paginate(20)->appends($request->query());
+        $prayers       = $query->get();
         $categories    = RosaryCategory::orderBy('sort_order')->get();
         $subCategories = RosarySubCategory::orderBy('sort_order')->get();
 
         return view('admin.rosary.prayers.index', compact('prayers', 'categories', 'subCategories'));
     }
-
     // Add form
     public function create(Request $request)
     {

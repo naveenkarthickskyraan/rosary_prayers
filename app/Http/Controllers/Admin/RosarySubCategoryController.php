@@ -22,7 +22,7 @@ class RosarySubCategoryController extends Controller
             $query->where('category_id', $request->category_id);
         }
 
-        $subCategories = $query->paginate(20)->appends($request->query());
+        $subCategories = $query->get();
         $categories    = RosaryCategory::orderBy('sort_order')->get();
 
         return view('admin.rosary.sub_categories.index', compact('subCategories', 'categories'));

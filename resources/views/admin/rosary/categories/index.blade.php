@@ -19,44 +19,46 @@
             </div>
 
             <div class="table-responsive">
-                <table class="table table-bordered table-striped">
+                <table class="table table-bordered table-striped js-datatable" style="width:100%">
                     <thead style="background:#162133; color:#fff;">
                         <tr>
-                            {{-- <th>#</th> --}}
                             <th>ID</th>
+                            <th class="no-sort">Icon</th>
                             <th>Name</th>
-                            <th>Icon</th>
+                            <th>Sub Categories</th>
                             <th>Prayers</th>
-                            {{-- <th>Sort Order</th> --}}
-                            <th width="160">Action</th>
+                            {{-- <th>Sort</th> --}}
+                            <th class="no-sort" width="300">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse($categories as $key => $c)
+                        @foreach($categories as $c)
                             <tr>
-                                {{-- <td>{{ $key + 1 }}</td> --}}
                                 <td>{{ $c->id }}</td>
-                                <td>{{ $c->name }}</td>
                                 <td>
                                     @if($c->icon)
-                                        <img src="{{ $c->icon }}" width="36" style="background:#162133;padding:4px;border-radius:6px;">
+                                        <img src="{{ $c->icon }}" width="40" style="background:#162133;padding:4px;border-radius:6px;">
                                     @endif
                                 </td>
+                                <td>{{ $c->name }}<br><small class="text-muted">{{ $c->subtitle }}</small></td>
+                                <td>{{ $c->sub_categories_count }}</td>
                                 <td>{{ $c->prayers_count }}</td>
                                 {{-- <td>{{ $c->sort_order }}</td> --}}
                                 <td>
+                                    {{-- <a href="{{ url('admin/rosary-sub-categories?category_id='.$c->id) }}" class="btn btn-sm btn-dark">Sub Categories</a>
+                                    <a href="{{ url('admin/rosary-prayers?category_id='.$c->id) }}" class="btn btn-sm btn-secondary">Prayers</a> --}}
                                     <a href="{{ url('admin/rosary-categories/'.$c->id.'/edit') }}" class="btn btn-sm btn-info">Edit</a>
                                     <a href="{{ url('admin/rosary-categories/'.$c->id.'/delete') }}" class="btn btn-sm btn-danger"
-                                       onclick="return confirm('Delete this category and all its prayers?')">Delete</a>
+                                       onclick="return confirm('Delete this category with its sub categories and prayers?')">Delete</a>
                                 </td>
                             </tr>
-                        @empty
-                            <tr><td colspan="7" class="text-center">No categories found</td></tr>
-                        @endforelse
+                        @endforeach
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 </div>
+
+@include('admin.rosary._datatable')
 @endsection

@@ -30,20 +30,20 @@
             </form>
 
             <div class="table-responsive">
-                <table class="table table-bordered table-striped">
+                <table class="table table-bordered table-striped js-datatable" style="width:100%">
                     <thead style="background:#162133; color:#fff;">
                         <tr>
                             <th>ID</th>
-                            {{-- <th>Image</th> --}}
+                            {{-- <th class="no-sort">Image</th> --}}
                             <th>Name</th>
                             <th>Category</th>
                             <th>Prayers</th>
                             {{-- <th>Sort</th> --}}
-                            <th width="240">Action</th>
+                            <th class="no-sort" width="240">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse($subCategories as $s)
+                        @foreach($subCategories as $s)
                             <tr>
                                 <td>{{ $s->id }}</td>
                                 {{-- <td>
@@ -56,21 +56,19 @@
                                 <td>{{ $s->prayers_count }}</td>
                                 {{-- <td>{{ $s->sort_order }}</td> --}}
                                 <td>
-                                    <a href="{{ url('admin/rosary-prayers?sub_category_id='.$s->id) }}" class="btn btn-sm btn-secondary">Prayers</a>
+                                    {{-- <a href="{{ url('admin/rosary-prayers?category_id='.$s->category_id.'&sub_category_id='.$s->id) }}" class="btn btn-sm btn-secondary">Prayers</a> --}}
                                     <a href="{{ url('admin/rosary-sub-categories/'.$s->id.'/edit') }}" class="btn btn-sm btn-info">Edit</a>
                                     <a href="{{ url('admin/rosary-sub-categories/'.$s->id.'/delete') }}" class="btn btn-sm btn-danger"
                                        onclick="return confirm('Delete this sub category and all its prayers?')">Delete</a>
                                 </td>
                             </tr>
-                        @empty
-                            <tr><td colspan="7" class="text-center">No sub categories found</td></tr>
-                        @endforelse
+                        @endforeach
                     </tbody>
                 </table>
             </div>
-
-            {{ $subCategories->links() }}
         </div>
     </div>
 </div>
+
+@include('admin.rosary._datatable')
 @endsection

@@ -40,20 +40,20 @@
             </form>
 
             <div class="table-responsive">
-                <table class="table table-bordered table-striped">
+                <table class="table table-bordered table-striped js-datatable" style="width:100%">
                     <thead style="background:#162133; color:#fff;">
                         <tr>
                             <th>ID</th>
-                            <th>Image</th>
+                            <th class="no-sort">Image</th>
                             <th>Title</th>
                             <th>Category</th>
                             <th>Sub Category</th>
                             {{-- <th>Sort</th> --}}
-                            <th width="160">Action</th>
+                            <th class="no-sort" width="160">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse($prayers as $p)
+                        @foreach($prayers as $p)
                             <tr>
                                 <td>{{ $p->id }}</td>
                                 <td>
@@ -71,23 +71,20 @@
                                        onclick="return confirm('Delete this prayer?')">Delete</a>
                                 </td>
                             </tr>
-                        @empty
-                            <tr><td colspan="7" class="text-center">No prayers found</td></tr>
-                        @endforelse
+                        @endforeach
                     </tbody>
                 </table>
             </div>
-
-            {{ $prayers->links() }}
         </div>
     </div>
 </div>
 
 <script>
-// Changing the category resets the sub category filter
 document.getElementById('filterCategory').addEventListener('change', function () {
     document.getElementById('filterSub').value = '';
     document.getElementById('filterForm').submit();
 });
 </script>
+
+@include('admin.rosary._datatable')
 @endsection

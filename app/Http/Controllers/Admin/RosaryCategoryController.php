@@ -10,9 +10,10 @@ use Illuminate\Support\Str;
 class RosaryCategoryController extends Controller
 {
     // List
-    public function index()
+    public function index(Request $request)
     {
-        $categories = RosaryCategory::withCount('prayers')
+        $categories = RosaryCategory::withCount(['subCategories', 'prayers'])
+            ->orderBy('sort_order')
             ->get();
 
         return view('admin.rosary.categories.index', compact('categories'));
