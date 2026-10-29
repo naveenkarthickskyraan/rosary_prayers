@@ -63,62 +63,75 @@ class RosaryPrayerController extends Controller
     // 3. POST /api/categories/prayers
     // params: sub_category_id (prayers of a sub category)
     //     or: id (prayers placed directly in a category), page
-    public function categoryPrayers(Request $request)
-    {
-        $page  = max((int) $request->page, 1);
-        $limit = 15;
+    
+public function categoryPrayers(Request $request)
+{
+    $page  = max((int) $request->page, 1);
+    $limit = 15;
 
-        $query = DB::table('rosary_prayers');
+    $query = DB::table('rosary_prayers');
 
-        if ($request->sub_category_id) {
-            $query->where('sub_category_id', $request->sub_category_id);
-        } else {
-            $query->where('category_id', $request->id)->whereNull('sub_category_id');
-        }
-
-        $paginator = $query->orderBy('sort_order')->paginate($limit, ['*'], 'page', $page);
-
-        $resArr = collect($paginator->items())->map(function ($p) {
-            return [
-                'prayer_id'       => $p->id,
-                'title'    => $p->title,
-                'subtitle' => $p->subtitle ?? '',
-                'imageUrl' => $p->thumbnail_url ?? '',
-            ];
-        })->values()->toArray();
-
-        return $this->response($resArr, [
-            'current_page' => $paginator->currentPage(),
-            'last_page'    => $paginator->lastPage(),
-            'total'        => $paginator->total(),
-        ]);
+    if ($request->filled('sub_category_id')) {
+        $query->where('sub_category_id', $request->sub_category_id);
+    } else {
+        $query->where('category_id', $request->id)
+              ->whereNull('sub_category_id');
     }
+
+    $paginator = $query->orderBy('sort_order')
+        ->paginate($limit, ['*'], 'page', $page);
+
+    $resArr = collect($paginator->items())->map(function ($p) {
+        $parts = preg_split(
+            "/\R{2,}/",
+            trim($p->body ?? '')
+        );
+
+        return [
+            'id'            => $p->id,
+            'categoryId'    => $p->category_id,
+            'subCategoryId' => $p->sub_category_id,
+            'title'         => $p->title,
+            'subtitle'      => $p->subtitle ?? '',
+            'heading'       => $p->heading ?? '',
+            'imageUrl'      => $p->thumbnail_url ?? '',
+            'paragraphs'    => $parts ?: [],
+        ];
+    })->values()->toArray();
+
+    return $this->response($resArr, [
+        'current_page' => $paginator->currentPage(),
+        'last_page'    => $paginator->lastPage(),
+        'total'        => $paginator->total(),
+    ]);
+}
+
 
     // 4. POST /api/prayers/detail   params: id (prayer id)
-    public function prayerDetail(Request $request)
-    {
-        $prayer = DB::table('rosary_prayers')->where('id', $request->id)->first();
+    // public function prayerDetail(Request $request)
+    // {
+    //     $prayer = DB::table('rosary_prayers')->where('id', $request->id)->first();
 
-        if (!$prayer) {
-            return $this->response([]);
-        }
+    //     if (!$prayer) {
+    //         return $this->response([]);
+    //     }
 
-        $parts   = preg_split("/\R{2,}/", trim($prayer->body));
-        // $heading = array_shift($parts);
+    //     $parts   = preg_split("/\R{2,}/", trim($prayer->body));
+    //     // $heading = array_shift($parts);
 
-        $resArr = [
-            'id'            => $prayer->id,
-            'categoryId'    => $prayer->category_id,
-            'subCategoryId' => $prayer->sub_category_id,
-            'title'         => $prayer->title,
-            'subtitle'      => $prayer->subtitle ?? '',
-             'heading'       => $prayer->heading,
-            'imageUrl'      => $prayer->thumbnail_url ?? '',
-            'paragraphs'    => $parts,
-        ];
+    //     $resArr = [
+    //         'id'            => $prayer->id,
+    //         'categoryId'    => $prayer->category_id,
+    //         'subCategoryId' => $prayer->sub_category_id,
+    //         'title'         => $prayer->title,
+    //         'subtitle'      => $prayer->subtitle ?? '',
+    //          'heading'       => $prayer->heading ?? ' ',
+    //         'imageUrl'      => $prayer->thumbnail_url ?? '',
+    //         'paragraphs'    => $parts,
+    //     ];
 
-        return $this->response($resArr);
-    }
+    //     return $this->response($resArr);
+    // }
 
     private function response($resArr, $extra = [])
     {

@@ -173,7 +173,7 @@ body {
     <br><br>
 
     {{-- 4. Rosary Prayer Detail --}}
-    <fieldset style="border:2px solid; border-color:#162133">
+    {{-- <fieldset style="border:2px solid; border-color:#162133">
         <form name="form" method="POST" action="{{ url('/api/prayers/detail') }}">
             <table border="0" width="100%">
                 <tr>
@@ -213,7 +213,7 @@ body {
                 </tr>
             </table>
         </form>
-    </fieldset>
+    </fieldset> --}}
 
 </div>
 
