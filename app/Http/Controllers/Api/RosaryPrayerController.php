@@ -20,7 +20,6 @@ class RosaryPrayerController extends Controller
             ->pluck('c', 'category_id');
 
         $resArr = DB::table('rosary_categories')
-            ->orderBy('sort_order')
             ->get()
             ->map(function ($c) use ($subCounts) {
                 return [
@@ -50,7 +49,7 @@ class RosaryPrayerController extends Controller
                 'sub_category'       => $s->id,
                 'name'     => $s->name,
                 'subtitle' => $s->subtitle ?? '',
-                'imageUrl' => $s->image_url ?? '',
+                // 'imageUrl' => $s->image_url ?? '',
             ];
         })->values()->toArray();
 
@@ -114,8 +113,8 @@ class RosaryPrayerController extends Controller
             'title'         => $prayer->title,
             'subtitle'      => $prayer->subtitle ?? '',
             'imageUrl'      => $prayer->thumbnail_url ?? '',
-            'heading'       => $heading,
-            'paragraphs'    => $parts,
+            'prayers'       => $heading,
+            // 'paragraphs'    => $parts,
         ];
 
         return $this->response($resArr);
