@@ -13,7 +13,6 @@ class RosaryCategoryController extends Controller
     public function index()
     {
         $categories = RosaryCategory::withCount('prayers')
-            ->orderBy('sort_order')
             ->get();
 
         return view('admin.rosary.categories.index', compact('categories'));

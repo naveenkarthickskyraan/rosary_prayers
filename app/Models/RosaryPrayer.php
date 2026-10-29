@@ -10,9 +10,8 @@ class RosaryPrayer extends Model
     protected $table = 'rosary_prayers';
 
     protected $fillable = [
-        'category_id', 'slug', 'title', 'subtitle', 'body',
-        'thumbnail_url', 'hero_image_url', 'audio_url',
-        'duration_seconds', 'sort_order',
+        'category_id', 'sub_category_id', 'slug', 'title', 'subtitle', 'body',
+        'thumbnail_url', 'sort_order',
     ];
 
     public function category(): BelongsTo
@@ -20,8 +19,8 @@ class RosaryPrayer extends Model
         return $this->belongsTo(RosaryCategory::class, 'category_id');
     }
 
-    public function getRouteKeyName(): string
+    public function subCategory(): BelongsTo
     {
-        return 'slug';
+        return $this->belongsTo(RosarySubCategory::class, 'sub_category_id');
     }
 }

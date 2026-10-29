@@ -94,70 +94,36 @@
                   </a>
               </li>
 
-               @php
-                  $seg1 = $filename[1] ?? '';
-                  $isRosary = in_array($seg1, ['rosary-categories', 'rosary-prayers']);
-                  $isEdit = ($file == 'edit');
-                @endphp
+              @php
+                $seg1 = $filename[1] ?? '';
+                $isRosary = in_array($seg1, ['rosary-categories', 'rosary-sub-categories', 'rosary-prayers', 'rosary-api-list']);
+                $isEdit = ($file == 'edit');
+              @endphp
 
-                <!-- Rosary Prayers -->
-                <li class="{{ $isRosary ? 'mm-active' : '' }}">
-                    <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="dripicons-heart"></i>
-                        <span> Rosary Prayers</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="false">
+              <!-- Rosary Prayers -->
+              <li class="{{ $isRosary ? 'mm-active' : '' }}">
+                  <a href="javascript: void(0);" class="has-arrow waves-effect">
+                      <i class="dripicons-heart"></i>
+                      <span> Rosary Prayers</span>
+                  </a>
+                  <ul class="sub-menu" aria-expanded="false">
 
-                        <li>
-                            <a href="{{ url('admin/rosary-categories') }}"
-                              class="waves-effect {{ ($seg1 == 'rosary-categories' && $file == 'rosary-categories') ? 'active' : '' }}">
-                                Category List
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ url('admin/rosary-categories/create') }}"
-                              class="waves-effect {{ ($seg1 == 'rosary-categories' && $file == 'create') ? 'active' : '' }}">
-                                Add Category
-                            </a>
-                        </li>
+                      <li><a href="{{ url('admin/rosary-categories') }}" class="waves-effect {{ ($seg1 == 'rosary-categories' && $file == 'rosary-categories') ? 'active' : '' }}">Category List</a></li>
+                      <li><a href="{{ url('admin/rosary-categories/create') }}" class="waves-effect {{ ($seg1 == 'rosary-categories' && $file == 'create') ? 'active' : '' }}">Add Category</a></li>
 
-                        <li>
-                            <a href="{{ url('admin/rosary-prayers') }}"
-                              class="waves-effect {{ ($seg1 == 'rosary-prayers' && $file == 'rosary-prayers') ? 'active' : '' }}">
-                                Prayer List
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ url('admin/rosary-prayers/create') }}"
-                              class="waves-effect {{ ($seg1 == 'rosary-prayers' && $file == 'create') ? 'active' : '' }}">
-                                Add Prayer
-                            </a>
-                        </li>
+                      <li><a href="{{ url('admin/rosary-sub-categories') }}" class="waves-effect {{ ($seg1 == 'rosary-sub-categories' && $file == 'rosary-sub-categories') ? 'active' : '' }}">Sub Category List</a></li>
+                      <li><a href="{{ url('admin/rosary-sub-categories/create') }}" class="waves-effect {{ ($seg1 == 'rosary-sub-categories' && $file == 'create') ? 'active' : '' }}">Add Sub Category</a></li>
 
-                        @if($seg1 == 'rosary-categories' && $isEdit)
-                            <li>
-                                <a href="{{ url('admin/rosary-categories/' . ($filename[2] ?? '') . '/edit') }}" class="waves-effect active">
-                                    Edit Category
-                                </a>
-                            </li>
-                        @endif
+                      <li><a href="{{ url('admin/rosary-prayers') }}" class="waves-effect {{ ($seg1 == 'rosary-prayers' && $file == 'rosary-prayers') ? 'active' : '' }}">Prayer List</a></li>
+                      <li><a href="{{ url('admin/rosary-prayers/create') }}" class="waves-effect {{ ($seg1 == 'rosary-prayers' && $file == 'create') ? 'active' : '' }}">Add Prayer</a></li>
 
-                        @if($seg1 == 'rosary-prayers' && $isEdit)
-                            <li>
-                                <a href="{{ url('admin/rosary-prayers/' . ($filename[2] ?? '') . '/edit') }}" class="waves-effect active">
-                                    Edit Prayer
-                                </a>
-                            </li>
-                        @endif
+                      @if($seg1 == 'rosary-sub-categories' && $isEdit)
+                          <li><a href="#" class="waves-effect active">Edit Sub Category</a></li>
+                      @endif
 
-                        {{-- <li>
-                            <a href="{{ url('admin/rosary-api-list') }}"
-                              class="waves-effect {{ ($file == 'rosary-api-list') ? 'active' : '' }}">
-                                API List
-                            </a>
-                        </li> --}}
-                    </ul>
-                </li>
+                      {{-- <li><a href="{{ url('admin/rosary-api-list') }}" class="waves-effect {{ ($file == 'rosary-api-list') ? 'active' : '' }}">API List</a></li> --}}
+                  </ul>
+              </li>
                               
               
               <li class="menu-title mm-active">Admin Menu</li>

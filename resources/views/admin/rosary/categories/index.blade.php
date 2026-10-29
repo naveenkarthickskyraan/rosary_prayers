@@ -22,19 +22,19 @@
                 <table class="table table-bordered table-striped">
                     <thead style="background:#162133; color:#fff;">
                         <tr>
-                            <th>#</th>
+                            {{-- <th>#</th> --}}
                             <th>ID</th>
                             <th>Name</th>
                             <th>Icon</th>
                             <th>Prayers</th>
-                            <th>Sort Order</th>
+                            {{-- <th>Sort Order</th> --}}
                             <th width="160">Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse($categories as $key => $c)
                             <tr>
-                                <td>{{ $key + 1 }}</td>
+                                {{-- <td>{{ $key + 1 }}</td> --}}
                                 <td>{{ $c->id }}</td>
                                 <td>{{ $c->name }}</td>
                                 <td>
@@ -43,7 +43,7 @@
                                     @endif
                                 </td>
                                 <td>{{ $c->prayers_count }}</td>
-                                <td>{{ $c->sort_order }}</td>
+                                {{-- <td>{{ $c->sort_order }}</td> --}}
                                 <td>
                                     <a href="{{ url('admin/rosary-categories/'.$c->id.'/edit') }}" class="btn btn-sm btn-info">Edit</a>
                                     <a href="{{ url('admin/rosary-categories/'.$c->id.'/delete') }}" class="btn btn-sm btn-danger"

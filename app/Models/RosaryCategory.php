@@ -9,15 +9,15 @@ class RosaryCategory extends Model
 {
     protected $table = 'rosary_categories';
 
-    protected $fillable = ['slug', 'name', 'icon', 'sort_order'];
+    protected $fillable = ['slug', 'name', 'subtitle', 'icon', 'sort_order'];
+
+    public function subCategories(): HasMany
+    {
+        return $this->hasMany(RosarySubCategory::class, 'category_id')->orderBy('sort_order');
+    }
 
     public function prayers(): HasMany
     {
         return $this->hasMany(RosaryPrayer::class, 'category_id')->orderBy('sort_order');
-    }
-
-    public function getRouteKeyName(): string
-    {
-        return 'slug';
     }
 }

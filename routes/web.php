@@ -5,6 +5,8 @@ use App\Http\Controllers\AppController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\Admin\RosaryCategoryController;
 use App\Http\Controllers\Admin\RosaryPrayerAdminController;
+use App\Http\Controllers\Admin\RosarySubCategoryController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -108,6 +110,13 @@ Route::prefix('admin')->group(function () {
     Route::get('rosary-prayers/{id}/edit', [RosaryPrayerAdminController::class, 'edit']);
     Route::post('rosary-prayers/{id}/update', [RosaryPrayerAdminController::class, 'update']);
     Route::get('rosary-prayers/{id}/delete', [RosaryPrayerAdminController::class, 'destroy']);
+
+    Route::get('rosary-sub-categories', [RosarySubCategoryController::class, 'index']);
+    Route::get('rosary-sub-categories/create', [RosarySubCategoryController::class, 'create']);
+    Route::post('rosary-sub-categories', [RosarySubCategoryController::class, 'store']);
+    Route::get('rosary-sub-categories/{id}/edit', [RosarySubCategoryController::class, 'edit']);
+    Route::post('rosary-sub-categories/{id}/update', [RosarySubCategoryController::class, 'update']);
+    Route::get('rosary-sub-categories/{id}/delete', [RosarySubCategoryController::class, 'destroy']);
 
     // API test page
     Route::get('rosary-api-list', function () {

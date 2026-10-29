@@ -15,15 +15,25 @@
         <div class="card-body">
             <div class="d-flex justify-content-between mb-3">
                 <h4 class="card-title">Rosary Prayer List</h4>
-                <a href="{{ url('admin/rosary-prayers/create') }}" class="btn btn-primary">+ Add Prayer</a>
+                <a href="{{ url('admin/rosary-prayers/create?category_id='.request('category_id').'&sub_category_id='.request('sub_category_id')) }}" class="btn btn-primary">+ Add Prayer</a>
             </div>
 
-            <form method="GET" action="{{ url('admin/rosary-prayers') }}" class="row g-2 mb-3">
+            <form method="GET" action="{{ url('admin/rosary-prayers') }}" class="row g-2 mb-3" id="filterForm">
                 <div class="col-md-4">
-                    <select name="category_id" class="form-control" onchange="this.form.submit()">
+                    <select name="category_id" id="filterCategory" class="form-control">
                         <option value="">All Categories</option>
                         @foreach($categories as $c)
                             <option value="{{ $c->id }}" {{ request('category_id') == $c->id ? 'selected' : '' }}>{{ $c->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <select name="sub_category_id" id="filterSub" class="form-control" onchange="this.form.submit()">
+                        <option value="">All Sub Categories</option>
+                        @foreach($subCategories as $s)
+                            @if(!request('category_id') || request('category_id') == $s->category_id)
+                                <option value="{{ $s->id }}" {{ request('sub_category_id') == $s->id ? 'selected' : '' }}>{{ $s->name }}</option>
+                            @endif
                         @endforeach
                     </select>
                 </div>
@@ -37,7 +47,8 @@
                             <th>Image</th>
                             <th>Title</th>
                             <th>Category</th>
-                            <th>Sort</th>
+                            <th>Sub Category</th>
+                            {{-- <th>Sort</th> --}}
                             <th width="160">Action</th>
                         </tr>
                     </thead>
@@ -52,7 +63,8 @@
                                 </td>
                                 <td>{{ $p->title }}<br><small class="text-muted">{{ $p->subtitle }}</small></td>
                                 <td>{{ $p->category->name ?? '-' }}</td>
-                                <td>{{ $p->sort_order }}</td>
+                                <td>{{ $p->subCategory->name ?? '-' }}</td>
+                                {{-- <td>{{ $p->sort_order }}</td> --}}
                                 <td>
                                     <a href="{{ url('admin/rosary-prayers/'.$p->id.'/edit') }}" class="btn btn-sm btn-info">Edit</a>
                                     <a href="{{ url('admin/rosary-prayers/'.$p->id.'/delete') }}" class="btn btn-sm btn-danger"
@@ -60,7 +72,7 @@
                                 </td>
                             </tr>
                         @empty
-                            <tr><td colspan="6" class="text-center">No prayers found</td></tr>
+                            <tr><td colspan="7" class="text-center">No prayers found</td></tr>
                         @endforelse
                     </tbody>
                 </table>
@@ -70,4 +82,12 @@
         </div>
     </div>
 </div>
+
+<script>
+// Changing the category resets the sub category filter
+document.getElementById('filterCategory').addEventListener('change', function () {
+    document.getElementById('filterSub').value = '';
+    document.getElementById('filterForm').submit();
+});
+</script>
 @endsection

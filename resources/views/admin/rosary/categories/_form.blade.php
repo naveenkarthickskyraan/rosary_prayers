@@ -20,10 +20,10 @@
          style="margin-top:8px;border-radius:6px;background:#162133;padding:6px;{{ empty($category->icon) ? 'display:none;' : '' }}">
 </div>
 
-<div class="mb-3">
+{{-- <div class="mb-3">
     <label class="form-label">Sort Order</label>
     <input type="number" name="sort_order" min="0" class="form-control" value="{{ old('sort_order', $category->sort_order ?? 0) }}">
-</div>
+</div> --}}
 
 <button type="submit" class="btn btn-primary">Save</button>
 <a href="{{ url('admin/rosary-categories') }}" class="btn btn-secondary">Cancel</a>
