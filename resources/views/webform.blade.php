@@ -21,18 +21,18 @@ body {
 
 <div class="current tab-pane fade" id="tab-horizontal-30" role="tabpanel" aria-labelledby="tab-horizontal-30-tab">
 
-    {{-- 1. Rosary Category List --}}
+    {{-- 1. Rosary Language List --}}
     <fieldset style="border:2px solid; border-color:#162133">
-        <form name="form" method="POST" action="{{ url('/api/categories') }}">
+        <form name="form" method="POST" action="{{ url('/api/languages') }}">
             <table border="0" width="100%">
                 <tr>
                     <td height="30" colspan="2" align="left">
-                        <strong style="text-decoration:underline;color:#F00;"> 1 . Rosary Category List [ Development Mode ] </strong><br>
-                        <div><strong>API URL:</strong> {{ url('/api/categories') }}</div>
+                        <strong style="text-decoration:underline;color:#F00;"> 1 . Rosary Language List [ Development Mode ] </strong><br>
+                        <div><strong>API URL:</strong> {{ url('/api/languages') }}</div>
                         <div><strong>Method:</strong> POST </div>
                         <div><strong>Content-Type:</strong> application/x-www-form-urlencoded [i.e. x-www-form-urlencoded]</div>
                         <div><strong>API Mode:</strong> Development </div>
-                        <div><strong>Notes:</strong> General Prayers screen. The "next" field tells which API to call on tap: subCategories = Sub Category List API, prayers = Prayer List API </div>
+                        <div><strong>Notes:</strong> Language picker. Use the langCode from this API as lang_code in the other APIs </div>
                     </td>
                 </tr>
                 <tr>
@@ -60,18 +60,62 @@ body {
     </fieldset>
     <br><br>
 
-    {{-- 2. Rosary Sub Category List --}}
+    {{-- 2. Rosary Category List --}}
+    <fieldset style="border:2px solid; border-color:#162133">
+        <form name="form" method="POST" action="{{ url('/api/categories') }}">
+            <table border="0" width="100%">
+                <tr>
+                    <td height="30" colspan="2" align="left">
+                        <strong style="text-decoration:underline;color:#F00;"> 2 . Rosary Category List [ Development Mode ] </strong><br>
+                        <div><strong>API URL:</strong> {{ url('/api/categories') }}</div>
+                        <div><strong>Method:</strong> POST </div>
+                        <div><strong>Content-Type:</strong> application/x-www-form-urlencoded [i.e. x-www-form-urlencoded]</div>
+                        <div><strong>API Mode:</strong> Development </div>
+                        <div><strong>Notes:</strong> General Prayers screen. Returns the categories of the selected language </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center">
+                        <table width="100%" border="0" cellspacing="2" cellpadding="2">
+                            <tr style="background-color:#162133; color:#FFF;">
+                                <td><strong>Label Name</strong></td>
+                                <td><strong>Value</strong></td>
+                                <td><strong>Variable Name</strong></td>
+                                <td><strong>Mandatory</strong></td>
+                                <td><strong>Note</strong></td>
+                                <td><strong>Sample</strong></td>
+                            </tr>
+                            <tr>
+                                <td>Language Code</td>
+                                <td><input type="text" name="lang_code" /></td>
+                                <td>lang_code</td>
+                                <td>No</td>
+                                <td>From Rosary Language List API (langCode). Default en</td>
+                                <td>en (string)</td>
+                            </tr>
+                            <tr>
+                                <td colspan="1" align="center"><input type="submit" value="Submit" /></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </fieldset>
+    <br><br>
+
+    {{-- 3. Rosary Sub Category List --}}
     <fieldset style="border:2px solid; border-color:#162133">
         <form name="form" method="POST" action="{{ url('/api/sub-categories') }}">
             <table border="0" width="100%">
                 <tr>
                     <td height="30" colspan="2" align="left">
-                        <strong style="text-decoration:underline;color:#F00;"> 2 . Rosary Sub Category List [ Development Mode ] </strong><br>
+                        <strong style="text-decoration:underline;color:#F00;"> 3 . Rosary Sub Category List [ Development Mode ] </strong><br>
                         <div><strong>API URL:</strong> {{ url('/api/sub-categories') }}</div>
                         <div><strong>Method:</strong> POST </div>
                         <div><strong>Content-Type:</strong> application/x-www-form-urlencoded [i.e. x-www-form-urlencoded]</div>
                         <div><strong>API Mode:</strong> Development </div>
-                        <div><strong>Notes:</strong> Use when "next" is subCategories. Daily Prayer screen: Morning, Evening, Night, Before Meals </div>
+                        <div><strong>Notes:</strong> Daily Prayer screen: Morning, Evening, Night, Before Meals (in the selected language) </div>
                     </td>
                 </tr>
                 <tr>
@@ -94,6 +138,14 @@ body {
                                 <td>1 (string)</td>
                             </tr>
                             <tr>
+                                <td>Language Code</td>
+                                <td><input type="text" name="lang_code" /></td>
+                                <td>lang_code</td>
+                                <td>No</td>
+                                <td>From Rosary Language List API (langCode). Default en</td>
+                                <td>en (string)</td>
+                            </tr>
+                            <tr>
                                 <td>Page</td>
                                 <td><input type="text" name="page" /></td>
                                 <td>page</td>
@@ -112,18 +164,18 @@ body {
     </fieldset>
     <br><br>
 
-    {{-- 3. Rosary Prayer List --}}
+    {{-- 4. Rosary Prayer List --}}
     <fieldset style="border:2px solid; border-color:#162133">
         <form name="form" method="POST" action="{{ url('/api/categories/prayers') }}">
             <table border="0" width="100%">
                 <tr>
                     <td height="30" colspan="2" align="left">
-                        <strong style="text-decoration:underline;color:#F00;"> 3 . Rosary Prayer List [ Development Mode ] </strong><br>
+                        <strong style="text-decoration:underline;color:#F00;"> 4 . Rosary Prayer List [ Development Mode ] </strong><br>
                         <div><strong>API URL:</strong> {{ url('/api/categories/prayers') }}</div>
                         <div><strong>Method:</strong> POST </div>
                         <div><strong>Content-Type:</strong> application/x-www-form-urlencoded [i.e. x-www-form-urlencoded]</div>
                         <div><strong>API Mode:</strong> Development </div>
-                        <div><strong>Notes:</strong> Send sub_category_id for the prayers of a sub category (Prayer title 1, 2 ...). Or send id for a category that has no sub categories. Send only one of them. </div>
+                        <div><strong>Notes:</strong> Send sub_category_id for the prayers of a sub category (Prayer title 1, 2 ...). Or send id for a category that has no sub categories. Send only one of them. Returns the prayers with heading and paragraphs. </div>
                     </td>
                 </tr>
                 <tr>
@@ -142,7 +194,7 @@ body {
                                 <td><input type="text" name="sub_category_id" /></td>
                                 <td>sub_category_id</td>
                                 <td>Yes (if id is empty)</td>
-                                <td>From Rosary Sub Category List API</td>
+                                <td>From Rosary Sub Category List API (sub_category)</td>
                                 <td>1 (string)</td>
                             </tr>
                             <tr>
@@ -152,6 +204,14 @@ body {
                                 <td>Yes (if sub_category_id is empty)</td>
                                 <td>From Rosary Category List API</td>
                                 <td>3 (string)</td>
+                            </tr>
+                            <tr>
+                                <td>Language Code</td>
+                                <td><input type="text" name="lang_code" /></td>
+                                <td>lang_code</td>
+                                <td>No</td>
+                                <td>From Rosary Language List API (langCode). Default en</td>
+                                <td>en (string)</td>
                             </tr>
                             <tr>
                                 <td>Page</td>

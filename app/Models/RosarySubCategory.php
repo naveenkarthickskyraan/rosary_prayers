@@ -10,7 +10,7 @@ class RosarySubCategory extends Model
 {
     protected $table = 'rosary_sub_categories';
 
-    protected $fillable = ['category_id', 'name', 'subtitle', 'image_url', 'sort_order'];
+    protected $fillable = ['category_id', 'name', 'subtitle', 'image_url', 'sort_order','language_id'];
 
     public function category(): BelongsTo
     {
@@ -20,5 +20,9 @@ class RosarySubCategory extends Model
     public function prayers(): HasMany
     {
         return $this->hasMany(RosaryPrayer::class, 'sub_category_id')->orderBy('sort_order');
+    }
+     public function language(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(RosaryLanguage::class, 'language_id');
     }
 }

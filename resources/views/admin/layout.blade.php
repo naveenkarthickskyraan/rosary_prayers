@@ -6,7 +6,7 @@
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <meta name="csrf-token" content="{{ csrf_token() }}" />
 
-  <title>@yield('title', 'Bible Character Explorer') - Admin</title>
+  <title>@yield('title', 'Rosary Prayers') - Admin</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -75,11 +75,11 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-sm-6">
-            <script>document.write(new Date().getFullYear())</script> © Bible Character Explorer
+            <script>document.write(new Date().getFullYear())</script> © Rosary Prayers
           </div>
           <div class="col-sm-6">
             <div class="text-sm-end d-none d-sm-block">
-              Design & Development by Bible Character Explorer Team
+              Design & Development by Rosary Prayers Team
             </div>
           </div>
         </div>

@@ -6,6 +6,7 @@ use App\Http\Controllers\BlogController;
 use App\Http\Controllers\Admin\RosaryCategoryController;
 use App\Http\Controllers\Admin\RosaryPrayerAdminController;
 use App\Http\Controllers\Admin\RosarySubCategoryController;
+use App\Http\Controllers\Admin\RosaryLanguageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -117,6 +118,14 @@ Route::prefix('admin')->group(function () {
     Route::get('rosary-sub-categories/{id}/edit', [RosarySubCategoryController::class, 'edit']);
     Route::post('rosary-sub-categories/{id}/update', [RosarySubCategoryController::class, 'update']);
     Route::get('rosary-sub-categories/{id}/delete', [RosarySubCategoryController::class, 'destroy']);
+
+
+    Route::get('rosary-languages', [RosaryLanguageController::class, 'index']);
+    Route::get('rosary-languages/create', [RosaryLanguageController::class, 'create']);
+    Route::post('rosary-languages', [RosaryLanguageController::class, 'store']);
+    Route::get('rosary-languages/{id}/edit', [RosaryLanguageController::class, 'edit']);
+    Route::post('rosary-languages/{id}/update', [RosaryLanguageController::class, 'update']);
+    Route::get('rosary-languages/{id}/delete', [RosaryLanguageController::class, 'destroy']);
 
     // API test page
     Route::get('rosary-api-list', function () {

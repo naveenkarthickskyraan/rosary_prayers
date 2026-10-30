@@ -96,7 +96,7 @@
 
               @php
                 $seg1 = $filename[1] ?? '';
-                $isRosary = in_array($seg1, ['rosary-categories', 'rosary-sub-categories', 'rosary-prayers', 'rosary-api-list']);
+                $isRosary = in_array($seg1, ['rosary-categories', 'rosary-sub-categories', 'rosary-prayers','rosary-languages', 'rosary-api-list']);
                 $isEdit = ($file == 'edit');
               @endphp
 
@@ -120,6 +120,9 @@
                       @if($seg1 == 'rosary-sub-categories' && $isEdit)
                           <li><a href="#" class="waves-effect active">Edit Sub Category</a></li>
                       @endif
+
+                      <li><a href="{{ url('admin/rosary-languages') }}" class="waves-effect {{ ($seg1 == 'rosary-languages' && $file == 'rosary-languages') ? 'active' : '' }}">Language List</a></li>
+<li><a href="{{ url('admin/rosary-languages/create') }}" class="waves-effect {{ ($seg1 == 'rosary-languages' && $file == 'create') ? 'active' : '' }}">Add Language</a></li>
 
                       {{-- <li><a href="{{ url('admin/rosary-api-list') }}" class="waves-effect {{ ($file == 'rosary-api-list') ? 'active' : '' }}">API List</a></li> --}}
                   </ul>

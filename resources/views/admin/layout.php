@@ -75,11 +75,11 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-sm-6">
-            <script>document.write(new Date().getFullYear())</script> © Bible Character Explorer
+            <script>document.write(new Date().getFullYear())</script> © Rosary Prayers
           </div>
           <div class="col-sm-6">
             <div class="text-sm-end d-none d-sm-block">
-              Design & Development by Bible Character Explorer Team
+              Design & Development by Rosary Prayers Team
             </div>
           </div>
         </div>

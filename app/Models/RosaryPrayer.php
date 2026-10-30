@@ -11,7 +11,7 @@ class RosaryPrayer extends Model
 
     protected $fillable = [
         'category_id', 'sub_category_id', 'slug', 'title', 'subtitle','heading', 'body',
-        'thumbnail_url', 'sort_order',
+        'thumbnail_url', 'sort_order','language_id',
     ];
 
     public function category(): BelongsTo
@@ -22,5 +22,9 @@ class RosaryPrayer extends Model
     public function subCategory(): BelongsTo
     {
         return $this->belongsTo(RosarySubCategory::class, 'sub_category_id');
+    }
+     public function language(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(RosaryLanguage::class, 'language_id');
     }
 }
