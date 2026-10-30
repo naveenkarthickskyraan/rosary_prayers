@@ -25,9 +25,8 @@
                             <th>ID</th>
                             <th class="no-sort">Icon</th>
                             <th>Name</th>
-                            <th>Sub Categories</th>
-                            <th>Prayers</th>
-                            {{-- <th>Sort</th> --}}
+                            <th>Language</th>
+                            {{-- <th>Prayers</th> --}}
                             <th class="no-sort" width="300">Action</th>
                         </tr>
                     </thead>
@@ -41,8 +40,8 @@
                                     @endif
                                 </td>
                                 <td>{{ $c->name }}<br><small class="text-muted">{{ $c->subtitle }}</small></td>
-                                <td>{{ $c->sub_categories_count }}</td>
-                                <td>{{ $c->prayers_count }}</td>
+                                <td>{{ $c->language->lang_name }}</td>
+                                {{-- <td>{{ $c->prayers_count }}</td> --}}
                                 {{-- <td>{{ $c->sort_order }}</td> --}}
                                 <td>
                                     {{-- <a href="{{ url('admin/rosary-sub-categories?category_id='.$c->id) }}" class="btn btn-sm btn-dark">Sub Categories</a>

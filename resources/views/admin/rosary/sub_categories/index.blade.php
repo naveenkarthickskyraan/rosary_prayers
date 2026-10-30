@@ -37,7 +37,7 @@
                             {{-- <th class="no-sort">Image</th> --}}
                             <th>Name</th>
                             <th>Category</th>
-                            <th>Prayers</th>
+                            <th>Language</th>
                             {{-- <th>Sort</th> --}}
                             <th class="no-sort" width="240">Action</th>
                         </tr>
@@ -53,7 +53,7 @@
                                 </td> --}}
                                 <td>{{ $s->name }}<br><small class="text-muted">{{ $s->subtitle }}</small></td>
                                 <td>{{ $s->category->name ?? '-' }}</td>
-                                <td>{{ $s->prayers_count }}</td>
+                                <td>{{ $s->language->lang_name }}</td>
                                 {{-- <td>{{ $s->sort_order }}</td> --}}
                                 <td>
                                     {{-- <a href="{{ url('admin/rosary-prayers?category_id='.$s->category_id.'&sub_category_id='.$s->id) }}" class="btn btn-sm btn-secondary">Prayers</a> --}}

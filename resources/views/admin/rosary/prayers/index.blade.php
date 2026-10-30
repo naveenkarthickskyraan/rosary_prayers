@@ -15,11 +15,19 @@
         <div class="card-body">
             <div class="d-flex justify-content-between mb-3">
                 <h4 class="card-title">Rosary Prayer List</h4>
-                <a href="{{ url('admin/rosary-prayers/create?category_id='.request('category_id').'&sub_category_id='.request('sub_category_id')) }}" class="btn btn-primary">+ Add Prayer</a>
+                <a href="{{ url('admin/rosary-prayers/create?language_id='.request('language_id').'&category_id='.request('category_id').'&sub_category_id='.request('sub_category_id')) }}" class="btn btn-primary">+ Add Prayer</a>
             </div>
 
             <form method="GET" action="{{ url('admin/rosary-prayers') }}" class="row g-2 mb-3" id="filterForm">
-                <div class="col-md-4">
+                <div class="col-md-3">
+                    <select name="language_id" id="filterLang" class="form-control">
+                        <option value="">All Languages</option>
+                        @foreach($languages as $l)
+                            <option value="{{ $l->id }}" {{ request('language_id') == $l->id ? 'selected' : '' }}>{{ $l->lang_name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-md-3">
                     <select name="category_id" id="filterCategory" class="form-control">
                         <option value="">All Categories</option>
                         @foreach($categories as $c)
@@ -27,13 +35,11 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <select name="sub_category_id" id="filterSub" class="form-control" onchange="this.form.submit()">
                         <option value="">All Sub Categories</option>
                         @foreach($subCategories as $s)
-                            @if(!request('category_id') || request('category_id') == $s->category_id)
-                                <option value="{{ $s->id }}" {{ request('sub_category_id') == $s->id ? 'selected' : '' }}>{{ $s->name }}</option>
-                            @endif
+                            <option value="{{ $s->id }}" {{ request('sub_category_id') == $s->id ? 'selected' : '' }}>{{ $s->name }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -44,6 +50,7 @@
                     <thead style="background:#162133; color:#fff;">
                         <tr>
                             <th>ID</th>
+                            <th>Language</th>
                             <th class="no-sort">Image</th>
                             <th>Title</th>
                             <th>Category</th>
@@ -56,6 +63,7 @@
                         @foreach($prayers as $p)
                             <tr>
                                 <td>{{ $p->id }}</td>
+                                <td>{{ $p->language->lang_name ?? '-' }} ({{ $p->language->lang_code ?? '' }})</td>
                                 <td>
                                     @if($p->thumbnail_url)
                                         <img src="{{ $p->thumbnail_url }}" width="60" height="40" style="object-fit:cover;border-radius:4px;">
@@ -80,6 +88,12 @@
 </div>
 
 <script>
+// Changing language clears category and sub category; changing category clears sub category
+document.getElementById('filterLang').addEventListener('change', function () {
+    document.getElementById('filterCategory').value = '';
+    document.getElementById('filterSub').value = '';
+    document.getElementById('filterForm').submit();
+});
 document.getElementById('filterCategory').addEventListener('change', function () {
     document.getElementById('filterSub').value = '';
     document.getElementById('filterForm').submit();

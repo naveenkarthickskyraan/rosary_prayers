@@ -4,68 +4,85 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\RosaryCategory;
+use App\Models\RosaryLanguage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 
 class RosaryCategoryController extends Controller
 {
     // List
     public function index(Request $request)
     {
-        $categories = RosaryCategory::withCount(['subCategories', 'prayers'])
-            ->orderBy('sort_order')
-            ->get();
+        $query = RosaryCategory::with('language')
+            ->withCount(['subCategories', 'prayers'])
+            ->orderBy('language_id');
 
-        return view('admin.rosary.categories.index', compact('categories'));
+        if ($request->language_id) {
+            $query->where('language_id', $request->language_id);
+        }
+
+        $categories = $query->get();
+        $languages  = RosaryLanguage::orderBy('id')->get();
+
+        return view('admin.rosary.categories.index', compact('categories', 'languages'));
     }
 
     // Add form
     public function create()
     {
-        return view('admin.rosary.categories.create');
+        $languages = RosaryLanguage::orderBy('id')->get();
+
+        return view('admin.rosary.categories.create', compact('languages'));
     }
 
     // Save
     public function store(Request $request)
     {
         $request->validate([
-            'name'       => 'required|string|max:255',
-            'icon'       => 'nullable|image|max:2048',
-            'sort_order' => 'nullable|integer|min:0',
+            'language_id' => 'required|exists:rosary_languages,id',
+            'name'        => 'required|string|max:255',
+            'icon'        => 'nullable|image|max:2048',
+            'sort_order'  => 'nullable|integer|min:0',
         ]);
 
         RosaryCategory::create([
-            'slug'       => $this->uniqueSlug($request->name),
-            'name'       => $request->name,
-            'icon'       => $this->upload($request, 'icon'),
-            'sort_order' => $request->sort_order ?? 0,
+            'language_id' => $request->language_id,
+            'slug'        => $this->uniqueSlug($request->name),
+            'name'        => $request->name,
+            'icon'        => $this->upload($request, 'icon'),
+            'sort_order'  => $request->sort_order ?? 0,
         ]);
 
-        return redirect('admin/rosary-categories')->with('success', 'Category added successfully');
+        return redirect('admin/rosary-categories?language_id=' . $request->language_id)
+            ->with('success', 'Category added successfully');
     }
 
     // Edit form
     public function edit($id)
     {
-        $category = RosaryCategory::findOrFail($id);
+        $category  = RosaryCategory::findOrFail($id);
+        $languages = RosaryLanguage::orderBy('id')->get();
 
-        return view('admin.rosary.categories.edit', compact('category'));
+        return view('admin.rosary.categories.edit', compact('category', 'languages'));
     }
 
-    // Update
+    // Update (language is fixed after the category is created)
     public function update(Request $request, $id)
     {
         $category = RosaryCategory::findOrFail($id);
 
         $request->validate([
-            'name'       => 'required|string|max:255',
-            'icon'       => 'nullable|image|max:2048',
-            'sort_order' => 'nullable|integer|min:0',
+            'language_id' => 'required|exists:rosary_languages,id',
+            'name'        => 'required|string|max:255',
+            'icon'        => 'nullable|image|max:2048',
+            'sort_order'  => 'nullable|integer|min:0',
         ]);
 
         $data = [
-            'name'       => $request->name,
-            'sort_order' => $request->sort_order ?? 0,
+            'language_id' => $request->language_id,
+            'name'        => $request->name,
+            'sort_order'  => $request->sort_order ?? 0,
         ];
 
         // Replace the icon only when a new file is uploaded
@@ -73,20 +90,35 @@ class RosaryCategoryController extends Controller
             $data['icon'] = $this->upload($request, 'icon');
         }
 
-        $category->update($data);
+        DB::transaction(function () use ($category, $data, $request) {
+            $category->update($data);
 
-        return redirect('admin/rosary-categories')->with('success', 'Category updated successfully');
+            // Language changed: move its sub categories and prayers to the new language too
+            DB::table('rosary_sub_categories')
+                ->where('category_id', $category->id)
+                ->update(['language_id' => $request->language_id]);
+
+            DB::table('rosary_prayers')
+                ->where('category_id', $category->id)
+                ->update(['language_id' => $request->language_id]);
+        });
+
+        return redirect('admin/rosary-categories?language_id=' . $request->language_id)
+            ->with('success', 'Category updated successfully');
     }
 
-    // Delete (its prayers are deleted too, because of the cascade foreign key)
+    // Delete (its sub categories and prayers are deleted too, because of the cascade)
     public function destroy($id)
     {
-        RosaryCategory::findOrFail($id)->delete();
+        $category = RosaryCategory::findOrFail($id);
+        $langId   = $category->language_id;
+        $category->delete();
 
-        return redirect('admin/rosary-categories')->with('success', 'Category deleted successfully');
+        return redirect('admin/rosary-categories?language_id=' . $langId)
+            ->with('success', 'Category deleted successfully');
     }
 
-    // Move the uploaded icon to public/rosary/icons and return its full URL
+    // Save the icon in public/rosary/icons and return its full URL
     private function upload(Request $request, $field)
     {
         if (!$request->hasFile($field)) {
@@ -100,9 +132,14 @@ class RosaryCategoryController extends Controller
         return url('rosary/icons/' . $fileName);
     }
 
+    // Tamil or Hindi names give an empty slug, so fall back to "item"
     private function uniqueSlug($name)
     {
         $slug = Str::slug($name);
+        if ($slug === '') {
+            $slug = 'item';
+        }
+
         $original = $slug;
         $i = 1;
 
