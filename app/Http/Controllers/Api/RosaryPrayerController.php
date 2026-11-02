@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Validator;
 class RosaryPrayerController extends Controller
 {
     // 0. /api/languages
@@ -29,6 +29,18 @@ class RosaryPrayerController extends Controller
     // 1. /api/categories   params: lang_code (default en)
     public function categories(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'lang_code' => 'required|string',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'result'  => '0',
+                'message' => $validator->errors()->first('lang_code'),
+                'data'    => [],
+            ], 422);
+        }
+
         $lang = $this->getLanguage($request->lang_code);
 
         $resArr = DB::table('rosary_categories')
@@ -52,6 +64,18 @@ class RosaryPrayerController extends Controller
     // 2. POST /api/sub-categories   params: id (category id), lang_code, page
     public function subCategories(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'lang_code' => 'required|string',
+            'id'        => 'required|integer',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'result'  => '0',
+                'message' => $validator->errors()->first(),
+                'data'    => [],
+            ], 422);
+        }
         $lang  = $this->getLanguage($request->lang_code);
         $page  = max((int) $request->page, 1);
         $limit = 15;
@@ -86,6 +110,19 @@ class RosaryPrayerController extends Controller
     //     or: id (prayers placed directly in a category), lang_code, page
     public function categoryPrayers(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+        'lang_code'      => 'required|string',
+        'id'             => 'required_without:sub_category_id|integer',
+        'sub_category_id'=> 'required_without:id|integer',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'result'  => '0',
+                'message' => $validator->errors()->first(),
+                'data'    => [],
+            ], 422);
+        }
         $lang  = $this->getLanguage($request->lang_code);
         $page  = max((int) $request->page, 1);
         $limit = 15;
