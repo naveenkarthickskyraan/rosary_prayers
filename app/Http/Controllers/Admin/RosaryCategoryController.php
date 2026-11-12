@@ -41,7 +41,7 @@ class RosaryCategoryController extends Controller
     {
         $request->validate([
             'language_id' => 'required|exists:rosary_languages,id',
-            'name'        => 'required|string|max:255',
+            'name'        => 'required|string|max:15',
             'icon'        => 'nullable|image|max:2048',
             'sort_order'  => 'nullable|integer|min:0',
         ]);
@@ -74,7 +74,7 @@ class RosaryCategoryController extends Controller
 
         $request->validate([
             'language_id' => 'required|exists:rosary_languages,id',
-            'name'        => 'required|string|max:255',
+            'name'        => 'required|string|max:15',
             'icon'        => 'nullable|image|max:2048',
             'sort_order'  => 'nullable|integer|min:0',
         ]);
