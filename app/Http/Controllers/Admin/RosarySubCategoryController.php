@@ -57,8 +57,8 @@ class RosarySubCategoryController extends Controller
         $request->validate([
             'language_id' => 'required|exists:rosary_languages,id',
             'category_id' => 'required|exists:rosary_categories,id',
-            'name'        => 'required|string|max:30',
-            'subtitle'    => 'nullable|string|max:255',
+            'name'        => 'required|string|max:15',
+            'subtitle'    => 'nullable|string|max:15',
             'image'       => 'nullable|image|max:2048',
             'sort_order'  => 'nullable|integer|min:0',
         ]);
@@ -99,8 +99,8 @@ class RosarySubCategoryController extends Controller
         $request->validate([
             'language_id' => 'required|exists:rosary_languages,id',
             'category_id' => 'required|exists:rosary_categories,id',
-            'name'        => 'required|string|max:30',
-            'subtitle'    => 'nullable|string|max:255',
+            'name'        => 'required|string|max:15',
+            'subtitle'    => 'nullable|string|max:15',
             'image'       => 'nullable|image|max:2048',
             'sort_order'  => 'nullable|integer|min:0',
         ]);
