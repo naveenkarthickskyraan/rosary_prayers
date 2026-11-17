@@ -219,15 +219,28 @@
           <div class="dropdown d-inline-block ms-2">
               <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
                   data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  @if(Auth::guard('admin')->user()->image_type == 1)
-                    <img class="rounded-circle header-profile-user" src="{{asset(Auth::guard('admin')->user()->image) }}"alt="Header Avatar">
-                  @elseif(Auth::guard('admin')->user()->image_type == 2)
-                    <img class="rounded-circle header-profile-user" src="{{asset(Auth::guard('admin')->user()->image) }}"alt="Header Avatar">
+                  @php
+                      $admin = Auth::guard('admin')->user();
+                  @endphp
+
+                  @if($admin)
+                      @if($admin->image_type == 1 || $admin->image_type == 2)
+                          <img class="rounded-circle header-profile-user"
+                              src="{{ $admin->image_type == 1 ? asset($admin->image) : $admin->image }}"
+                              alt="Header Avatar">
+                      @else
+                          <i class="mdi mdi-account-circle font-size-24"></i>
+                      @endif
+                  @else
+                      <i class="mdi mdi-account-circle font-size-24"></i>
                   @endif
               </button>
               <div class="dropdown-menu dropdown-menu-end">
                   <!-- item-->
-                  <center><h6>{{ Auth::guard('admin')->user()->name}}</h6></center>
+                  {{-- <center><h6>{{ Auth::guard('admin')->user()->name}}</h6></center> --}}
+                  @if($admin)
+                      <center><h6>{{ $admin->name }}</h6></center>
+                  @endif
                   <a class="dropdown-item" href="{{url('admin/profile_update')}}"><i class="dripicons-user font-size-16 align-middle me-2"></i>
                       Profile</a>
                   {{-- <a class="dropdown-item" href="#"><i class="dripicons-wallet font-size-16 align-middle me-2"></i> My

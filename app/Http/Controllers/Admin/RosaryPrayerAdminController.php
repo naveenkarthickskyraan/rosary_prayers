@@ -16,10 +16,7 @@ class RosaryPrayerAdminController extends Controller
     public function index(Request $request)
     {
         $query = RosaryPrayer::with(['category', 'subCategory', 'language'])
-            ->orderBy('language_id')
-            ->orderBy('category_id')
-            ->orderBy('sub_category_id')
-            ->orderBy('sort_order');
+            ->orderBy('id', 'DESC');
 
         if ($request->language_id) {
             $query->where('language_id', $request->language_id);

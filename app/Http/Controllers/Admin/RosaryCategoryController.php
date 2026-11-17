@@ -16,7 +16,7 @@ class RosaryCategoryController extends Controller
     {
         $query = RosaryCategory::with('language')
             ->withCount(['subCategories', 'prayers'])
-            ->orderBy('language_id');
+             ->orderBy('id', 'DESC');
 
         if ($request->language_id) {
             $query->where('language_id', $request->language_id);

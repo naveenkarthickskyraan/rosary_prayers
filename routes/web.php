@@ -94,7 +94,7 @@ Route::get('{any}', function () {
     return view('admin.error');
 });
 
-Route::prefix('admin')->group(function () {
+Route::group(['prefix' => 'admin', 'middleware' => 'admin.auth'], function () {
 
     // Rosary Categories
     Route::get('rosary-categories', [RosaryCategoryController::class, 'index']);
